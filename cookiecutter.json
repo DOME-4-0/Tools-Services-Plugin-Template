@@ -1,0 +1,14 @@
+{
+  "project_name": "My DOME 4.0 tool",
+  "project_slug": "my-dome40-tool",
+  "package_name": "{{ cookiecutter.project_slug|lower|replace('-', '_') }}",
+  "author": "Firstname Lastname",
+  "organization": "SINTEF",
+  "email": "firstname.lastname@{{ cookiecutter.organization }}.org",
+  "version": "0.0.1",
+  "year": "2023",
+  "use_git": true,
+  "username": "{{ '' if cookiecutter.use_git in ('y','Y','yes','Yes','YES','true','True','TRUE','on','On','ON') else 'NOT APPLICABLE ' }}GitHub_GitLab_BitBucket_etc_Username",
+  "scm_url": "{{ '' if cookiecutter.use_git in ('y','Y','yes','Yes','YES','true','True','TRUE','on','On','ON') else 'NOT APPLICABLE ' }}https://github.com/{{ cookiecutter.username }}/{{ cookiecutter.project_slug }}",
+"_copy_without_render": [".github/*"] 
+}
