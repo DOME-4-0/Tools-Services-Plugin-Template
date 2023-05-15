@@ -10,5 +10,5 @@ First, install cookiecutter according to [the documentation](https://cookiecutte
 
 Then run the following command to generate your project:
 ```
-    $ cookiecutter gh:DOME-4-0/Tools-Services-Plugin-Template
+cookiecutter gh:DOME-4-0/Tools-Services-Plugin-Template
 ```
