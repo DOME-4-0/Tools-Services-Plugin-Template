@@ -28,7 +28,7 @@ jobs:
           bandit -r app
       - name: Run PyLint
         run:
-          pylint app
+          pylint --extension-pkg-whitelist='pydantic' app
       - name: Run safety
         run: |
           if [ -f requirements.txt ]; then safety check -r requirements.txt --bare; fi
