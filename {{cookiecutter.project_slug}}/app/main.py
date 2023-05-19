@@ -2,7 +2,7 @@
 Creating the FastAPI application
 """
 from fastapi import FastAPI
-from app.routers.dome import router as dome_router
+from app.routers.wrapper import router as dome_router
 from app import __version__
 
 
