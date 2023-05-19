@@ -39,5 +39,5 @@ FROM base as production
 COPY . .
 
 # Run app
-CMD hypercorn asgi:app --bind 0.0.0.0:80
-EXPOSE 80
+CMD hypercorn asgi:app --bind 0.0.0.0:8080
+EXPOSE 8080
