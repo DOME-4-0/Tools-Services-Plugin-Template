@@ -24,7 +24,7 @@ An overview is also provided in the following table:
 | `project_slug` | The official package name to be used when installing the package via a package manager (e.g., `pip` or `conda`).<br>This will be the root directory name and should also be the repository name on an online git repository (like GitHub or GitLab).<br><br>**Important**: A project slug value may *not* include white space. | `my-dome40-tool` |
 | `package_name` | The Python importable root module.<br>This will be the root module repository name, under which the source code will be placed.<br><br>**Important**: A package name value may *not* include white space. A package name value may *only* be made up of the character set: a-z, A-Z, `_`, 0-9, and may *not* start with a number. | `my_dome40_tool` |
 | `author` | The author of the package. This can also be your organization name. | `Firstname Lastname` |
-| `organization` | Your organization. | `SINTEF` |
+| `organization` | Your organization. | `DOME 4.0` |
 | `email` | The author's email address. | `firstname.lastname@SINTEF.org` |
 | `version` | Start version.<br><br>**Important**: Must follow semantic versioning. For more information see [semver.org](https://semver.org). | `0.0.1` |
 | `year` | The current year. | `2023` |
