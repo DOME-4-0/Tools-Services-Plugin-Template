@@ -3,7 +3,7 @@
   "project_slug": "my-dome40-tool",
   "package_name": "{{ cookiecutter.project_slug|lower|replace('-', '_') }}",
   "author": "Firstname Lastname",
-  "organization": "SINTEF",
+  "organization": "DOME 4.0",
   "email": "firstname.lastname@{{ cookiecutter.organization }}.org",
   "version": "0.0.1",
   "year": "2023",
