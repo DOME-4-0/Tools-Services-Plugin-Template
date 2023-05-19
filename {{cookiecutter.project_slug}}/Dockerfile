@@ -23,7 +23,7 @@ COPY . .
 # Run static security check and linters
 RUN bandit -r app \
   && safety check -r requirements.txt --bare \
-  && pylint app \
+  && pylint --extension-pkg-whitelist='pydantic' app
   && mypy app 
 
 # Run pytest with code coverage
