@@ -1,20 +1,16 @@
 """
 Wrapper APIs. 
 """
-from fastapi import APIRouter, Request
+from fastapi import APIRouter
 from pydantic import BaseModel
-from requests_oauthlib import OAuth2Session
-from fastapi.responses import RedirectResponse
+import requests
 import os
+import base64
 
-HOSTNAME = os.environ.get("EXTERNAL_HOST_NAME")
 CLIENT_ID  = os.environ.get("CLIENT_ID")
-CLIENT_SECRET  = os.environ.get("CLIENT_SECRET ")
-CALLBACK_URL = os.environ.get("CALLBACK_URL ")
-SCOPES =["openid"]
-AUTH_URL = f"{HOSTNAME}/auth/realms/dome4.0/protocol/openid-connect/auth"
-TOKEN_URL = f"{HOSTNAME}/auth/realms/dome4.0/protocol/openid-connect/token"
-USER_INFO = f"{HOSTNAME}/auth/realms/dome4.0/protocol/openid-connect/userinfo"
+CLIENT_SECRET  = os.environ.get("CLIENT_SECRET")
+TOKEN_URL = "https://dome.the-marketplace.eu//auth/realms/dome4.0/protocol/openid-connect/token"
+
 
 class CatalogData(BaseModel):
     """
@@ -44,31 +40,19 @@ async def home():
     """
     return {"msg": "Hello World"}
 
-@router.get("/login")
-async def login():
-    oauth_session = OAuth2Session(CLIENT_ID, redirect_uri=CALLBACK_URL, scope=SCOPES)
-    authorization_url, _ = oauth_session.authorization_url(AUTH_URL)
-    return RedirectResponse(authorization_url)
+async def get_token():
+    headers = {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": f"Basic {base64.b64encode((CLIENT_ID + ':' + CLIENT_SECRET).encode()).decode()}"
+    }
+    data = {'grant_type': 'client_credentials' }
 
-@router.get("/callback")
-async def callback(request: Request):
-    scope_request = request.query_params.get("scope")
-    oauth_session = OAuth2Session(
-        CLIENT_ID, redirect_uri=CALLBACK_URL, scope=scope_request
-    )
-    try:
-        oauth_session.fetch_token(
-            TOKEN_URL,
-            client_secret=CLIENT_SECRET,
-            authorization_response=request.url._url,
-            scope=scope_request,
-            verify=False,
-        )
-    except Exception:
-        return request.query_params.get("error_description")
-    user = oauth_session.get(USER_INFO)
+    response = requests.post(TOKEN_URL, headers=headers, data=data)
+    if response.status_code == 200:
+        return response.json()['access_token']
+    else:
+        return {"error": f"Request failed with status code {response.status_code}"}
 
-    return user.content
 
 @router.post("/fetch-application-output-url")
 async def fetch_output_url(dome_catalog_data: CatalogData):
@@ -79,10 +63,10 @@ async def fetch_output_url(dome_catalog_data: CatalogData):
     Returns:
         A dictionary with a url key and value.
     """
-    # Use dome_catalog_data.url to fetch data from DOME to your application.
+    # Use dome_catalog_data.url to fetch data from DOME to your application. Use get_token() to fetch the token!
     # Process it and send back an output url (redicert url if you're returning a webpage,
     # download url if you're returning a file).
-
+    
     output_url = "return_url"
 
     # Return either redirect url or download url, depending on your application.
