@@ -64,6 +64,7 @@ async def fetch_output_url(dome_catalog_data: CatalogData):
         A dictionary with a url key and value.
     """
     # Use dome_catalog_data.url to fetch data from DOME to your application. Use get_token() to fetch the token!
+    # TODO : Add authentication code flow (so user perspective is added!! and dome knows this request is from a authorized user with access)
     # Process it and send back an output url (redicert url if you're returning a webpage,
     # download url if you're returning a file).
     
@@ -71,3 +72,12 @@ async def fetch_output_url(dome_catalog_data: CatalogData):
 
     # Return either redirect url or download url, depending on your application.
     return {"url": output_url}
+
+
+# TODO: Add Authorization code flow 
+
+# @router.get("/login")
+# async def login():
+
+# @router.get("/callback")
+# async def  callback():
